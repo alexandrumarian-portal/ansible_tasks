@@ -1,0 +1,28 @@
+1. First, you have to create a vaulted file where we’ll store the passwords.
+When you run this command it will ask you to create a password and then an empty file will show up.
+
+ansible-vault create secrets.yml
+
+Add some passwords there and save the file.
+	
+mysql_pwd: "DifficultPassword"
+ht_pwd: "PasswordXYZ"
+
+
+ansible-vault edit secrets.yaml
+
+
+2. If you look at the file now, you’ll see that it’s encrypted and you can’t see the passwords anymore.
+If you want to edit the file do ansible-vault edit secrets.yaml and enter the vault password.
+Create a small playbook that displays the password:
+
+# centos-vault.yml
+---
+- hosts: centos
+  vars_files:
+    - secrets.yml
+ 
+  tasks:
+  - name: Show mysql pwd
+    debug:
+      msg: "{{ mysql_pwd }}"
