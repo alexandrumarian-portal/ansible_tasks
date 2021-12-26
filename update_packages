@@ -1,0 +1,36 @@
+1. Red Hat family uses  yum :
+# centos-update.yml
+---
+  - hosts: centos
+    become: yes
+    tasks:
+      - name: Update all packages
+        yum: name=* state=latest
+      - name: Reboot
+        reboot:
+        
+        
+2. Debian family uses apt :         
+# ubuntu-update.yml
+---
+  - hosts: ubuntu
+    become: yes
+    tasks:
+      - name: Update all packages
+        apt: name=* state=latest
+      - name: Reboot
+        reboot:
+        
+        
+3. FreeBSD uses shell command :
+# freebsd-update.yml
+---
+  - hosts: freebsd
+    become: yes
+    tasks:
+      - name: Fetch all packages
+        shell: freebsd-update fetch
+      - name: Install FreeBSD updates
+        shell: freebsd-update install
+      - name: Reboot
+        reboot:
