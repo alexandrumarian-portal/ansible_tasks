@@ -1,0 +1,22 @@
+---
+- hosts: localhost
+  vars:
+    account_email: user@domain.com
+    domain: domain.com
+  remote_user: root
+
+  tasks:
+  - name: Installl certbot
+    apt:
+      name: certbot
+      state: present
+
+  tasks:
+  - name: Installl python3-certbot-nginx
+    apt:
+      name: python3-certbot-nginx
+      state: present
+
+  - name: Get certificate
+    shell:
+      cmd: certbot --nginx certonly --noninteractive -d {{ domain }} --agree-tos --email {{ account_email }}
