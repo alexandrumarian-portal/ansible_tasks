@@ -1,0 +1,15 @@
+---
+- hosts: mailservers
+  vars:
+    account_email: postmaster@example.com
+    domain: email.example.com
+  remote_user: root
+
+  tasks:
+  - name: Installl certbot crontab
+    cron:
+      name: "Certbot tls certificate renewal"
+      minute: "5"
+      month: "*"
+      day: "20"
+      job: certbot certonly --nginx --noninteractive -d {{ domain }} --agree-tos --email {{ account_email }}
